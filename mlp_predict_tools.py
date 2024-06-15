@@ -9,12 +9,9 @@ import seaborn as sns
 import numpy as np
 from sklearn.neural_network import MLPClassifier
 
-def imagem_para_lista_de_coordenadas(caminho_imagem, tecnica, hands):
+def imagem_para_lista_de_coordenadas(imagem, caminho_imagem, tecnica, hands):
     try:
-        image = cv2.imread(caminho_imagem)
-        image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        # Processando a imagem com o MediaPipe Hands
-        results = hands.process(image_rgb)
+        results = hands.process(imagem)
         if results.multi_hand_landmarks:
             newRow = []
             if(tecnica == "centro_geometrico"):
@@ -76,8 +73,10 @@ def gerador_de_csv_com_as_coordenadas_e_os_rotulos(tipo, tecnica):
                     k = j
 
                 caminho = f"imagens/{tipo}/{reps}/{k}.png"
-
-                lista_de_coordenadas = imagem_para_lista_de_coordenadas( caminho, tecnica, hands)
+                image = cv2.imread(caminho)
+                image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                # Processando a imagem com o MediaPipe Hands
+                lista_de_coordenadas = imagem_para_lista_de_coordenadas(image_rgb, caminho, tecnica, hands)
                 if lista_de_coordenadas is not None:
                     lista_de_coordenadas.append(reps)
                     writer.writerow(lista_de_coordenadas)
