@@ -4,12 +4,11 @@ from matplotlib import pyplot as plt
 import subprocess
 import csv
 import os
-import pandas as pd
-import seaborn as sns
+#import seaborn as sns
 import numpy as np
-from sklearn.neural_network import MLPClassifier
+#from sklearn.neural_network import MLPClassifier
 
-def imagem_para_lista_de_coordenadas(imagem, caminho_imagem, tecnica, hands):
+def imagem_para_lista_de_coordenadas(imagem, tecnica, hands):
     try:
         results = hands.process(imagem)
         if results.multi_hand_landmarks:
@@ -41,8 +40,6 @@ def contar_arquivos(caminho_repositorio):
 # nomeados como imagens_com_problemas_{tipo}_{tecnica}
 
 def gerador_de_csv_com_as_coordenadas_e_os_rotulos(tipo, tecnica):
-    # Obtendo o numero de arquivos de imagem de cada letra
-    # Lista com nome de todos os diretórios
     label = ["A","B","C","D","E","F","G","I","L","M","N","O","P","Q","R","S","T","U","V","W"]
     mp_hands = mp.solutions.hands
     hands = mp_hands.Hands(static_image_mode=True, max_num_hands=1, min_detection_confidence=0.5)
@@ -65,8 +62,6 @@ def gerador_de_csv_com_as_coordenadas_e_os_rotulos(tipo, tecnica):
         writer.writerow(header) # Inserindo os nomes dos atributos
         for i, reps in enumerate(label): 
             for j in range(1,num_files[i]+1):
-
-                # Outro problema com os nomes
                 if(reps == 'F' and j > 300 and tipo == 'test'):
                     k = j + 100
                 else:
