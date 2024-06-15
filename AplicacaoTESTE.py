@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from tensorflow.keras.models import load_model
+from mlp_predict_tools import imagem_para_lista_de_coordenadas
 
 # Carregar o modelo treinado
 model = load_model('modelo_libras.h5')  # Substitua pelo caminho do seu modelo
