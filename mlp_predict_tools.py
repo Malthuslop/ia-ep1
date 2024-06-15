@@ -8,7 +8,6 @@ import pandas as pd
 import seaborn as sns
 import numpy as np
 from sklearn.neural_network import MLPClassifier
-import subprocess
 
 def imagem_para_lista_de_coordenadas(caminho_imagem, tecnica, hands):
     try:
